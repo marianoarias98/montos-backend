@@ -63,10 +63,19 @@ class MontoController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(Request $request)
     {
-        //
-    }
+        $id = $request->id;
+        $monto = Monto::findOrFail($id);
+        $monto->concepto_id = $request->concepto_id;
+        $monto->personal = $request->personal;
+        $monto->patronal = $request->patronal;
+        $monto->total = $request->total;
+        $monto->mes = $request->mes;
+        $monto->año = $request->año;
+        $monto->save();
+        return response()->json(['message' => 'Monto editado con exito'], 200);
+    }   
 
     /**
      * Remove the specified resource from storage.

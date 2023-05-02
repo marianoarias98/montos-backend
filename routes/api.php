@@ -14,3 +14,4 @@ Route::post('/conceptos', [ConceptoController::class, 'index']);
 Route::post('/montos/crear', [MontoController::class, 'store']);
 Route::get('/montos', [MontoController::class, 'index']);
 Route::post('/montos/borrar', [MontoController::class, 'destroy']);
+Route::post('/montos/actualizar', [MontoController::class, 'update']);
