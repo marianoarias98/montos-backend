@@ -15,3 +15,4 @@ Route::post('/montos/crear', [MontoController::class, 'store']);
 Route::get('/montos', [MontoController::class, 'index']);
 Route::post('/montos/borrar', [MontoController::class, 'destroy']);
 Route::post('/montos/actualizar', [MontoController::class, 'update']);
+Route::post('/monto', [MontoController::class, 'show']);
