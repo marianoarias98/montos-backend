@@ -11,10 +11,16 @@ class MontoController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
+        $mes = $request->mes;
+        $anio = $request->anio;
+
         $montos = Monto::join('conceptos', 'conceptos.id', '=', 'montos.concepto_id')
-        ->select('montos.*', 'conceptos.nombre as nombre', 'conceptos.codigo as codigo')->get();
+        ->select('montos.*', 'conceptos.nombre as nombre', 'conceptos.codigo as codigo')
+        ->where('montos.mes', $mes)
+        ->where('montos.año', $anio)
+        ->get();
         // $montos = Monto::all();
 
         return response()->json($montos, 200);
@@ -73,8 +79,8 @@ class MontoController extends Controller
         $monto->personal = $request->personal;
         $monto->patronal = $request->patronal;
         $monto->total = $request->total;
-        $monto->mes = $request->mes;
-        $monto->año = $request->año;
+        // $monto->mes = $request->mes;
+        // $monto->año = $request->año;
         $monto->save();
         return response()->json(['message' => 'Monto editado con exito'], 200);
     }   
