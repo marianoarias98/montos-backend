@@ -21,9 +21,16 @@ class MontoController extends Controller
         ->where('montos.mes', $mes)
         ->where('montos.año', $anio)
         ->get();
-        // $montos = Monto::all();
 
-        return response()->json($montos, 200);
+        $sumatorias = Monto::selectRaw('SUM(personal) as suma_personal, SUM(patronal) as suma_patronal,SUM(total) as suma_total')
+        ->where('montos.mes', $mes)
+        ->where('montos.año', $anio)
+        ->get();
+
+        return response()->json([
+            'montos' => $montos,
+            'sumatorias' => $sumatorias
+        ]);
     }
 
     /**
@@ -79,8 +86,8 @@ class MontoController extends Controller
         $monto->personal = $request->personal;
         $monto->patronal = $request->patronal;
         $monto->total = $request->total;
-        // $monto->mes = $request->mes;
-        // $monto->año = $request->año;
+        $monto->mes = $request->mes;
+        $monto->año = $request->año;
         $monto->save();
         return response()->json(['message' => 'Monto editado con exito'], 200);
     }   
