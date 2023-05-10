@@ -11,15 +11,9 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('montos', function (Blueprint $table) {
+        Schema::create('colegios', function (Blueprint $table) {
             $table->id();
-            $table->integer('concepto_id');
-            $table->integer('colegio_id');
-            $table->decimal('personal');
-            $table->decimal('patronal');
-            $table->decimal('total');
-            $table->integer('mes');
-            $table->integer('año');
+            $table->string('nombre');
             $table->timestamps();
         });
     }
@@ -29,6 +23,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('montos');
+        Schema::dropIfExists('colegios');
     }
 };

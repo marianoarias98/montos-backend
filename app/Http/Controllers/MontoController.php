@@ -15,16 +15,19 @@ class MontoController extends Controller
     {
         $mes = $request->mes;
         $anio = $request->anio;
+        $colegio =  $request->colegio_id;
 
         $montos = Monto::join('conceptos', 'conceptos.id', '=', 'montos.concepto_id')
         ->select('montos.*', 'conceptos.nombre as nombre', 'conceptos.codigo as codigo')
         ->where('montos.mes', $mes)
         ->where('montos.año', $anio)
+        ->where('montos.colegio_id', $colegio)
         ->get();
 
         $sumatorias = Monto::selectRaw('SUM(personal) as suma_personal, SUM(patronal) as suma_patronal,SUM(total) as suma_total')
         ->where('montos.mes', $mes)
         ->where('montos.año', $anio)
+        ->where('montos.colegio_id', $colegio)
         ->get();
 
         return response()->json([
@@ -48,6 +51,7 @@ class MontoController extends Controller
     {
         $monto = new Monto;
         $monto->concepto_id = $request->concepto_id;
+        $monto->colegio_id = $request->colegio_id;
         $monto->personal = $request->personal;
         $monto->patronal = $request->patronal;
         $monto->total = $request->total;
@@ -83,6 +87,7 @@ class MontoController extends Controller
         $id = $request->id;
         $monto = Monto::findOrFail($id);
         $monto->concepto_id = $request->concepto_id;
+        $monto->colegio_id = $request->colegio_id;
         $monto->personal = $request->personal;
         $monto->patronal = $request->patronal;
         $monto->total = $request->total;
