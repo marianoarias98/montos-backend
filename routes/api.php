@@ -13,6 +13,7 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 Route::post('/conceptos', [ConceptoController::class, 'index']);
 
 Route::post('colegios', [ColegioController::class, 'index']);
+Route::post('/colegio', [ColegioController::class, 'show']);
 
 Route::post('/montos/crear', [MontoController::class, 'store']);
 Route::post('/montos', [MontoController::class, 'index']);
