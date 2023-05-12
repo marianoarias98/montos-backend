@@ -22,6 +22,7 @@ class MontoController extends Controller
         ->where('montos.mes', $mes)
         ->where('montos.año', $anio)
         ->where('montos.colegio_id', $colegio)
+        ->orderBy('montos.concepto_id')
         ->get();
 
         $sumatorias = Monto::selectRaw('SUM(personal) as suma_personal, SUM(patronal) as suma_patronal,SUM(total) as suma_total')
