@@ -8,9 +8,7 @@ use App\Models\Monto;
 
 class MontoController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
+
     public function index(Request $request)
     {
         $mes = $request->mes;
@@ -37,17 +35,6 @@ class MontoController extends Controller
         ]);
     }
 
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
-    {
-        //
-    }
-
-    /**
-     * Store a newly created resource in storage.
-     */
     public function store(Request $request)
     {
         $monto = new Monto;
@@ -62,9 +49,6 @@ class MontoController extends Controller
         return response()->json(['message'  => 'Success'], 200);
     }
 
-    /**
-     * Display the specified resource.
-     */
     public function show(Request $request)
     {
         $id = $request->id;
@@ -72,17 +56,6 @@ class MontoController extends Controller
         return response()->json($monto, 200);
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(string $id)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     */
     public function update(Request $request)
     {
         $id = $request->id;
@@ -98,9 +71,6 @@ class MontoController extends Controller
         return response()->json(['message' => 'Monto editado con exito'], 200);
     }   
 
-    /**
-     * Remove the specified resource from storage.
-     */
     public function destroy(Request $request)
     {
         $monto_id = $request->id;
