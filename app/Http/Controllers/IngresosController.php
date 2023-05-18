@@ -15,7 +15,7 @@ class IngresosController extends Controller
         $ingreso = Ingreso::where('colegio_id', $colegio)
         ->where('mes', $mes)
         ->where('año', $anio)
-        ->get();
+        ->first();
 
         return response()->json($ingreso, 200);
     }
