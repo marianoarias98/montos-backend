@@ -12,7 +12,13 @@ class IngresosController extends Controller
         $anio = $request->anio;
         $colegio =  $request->colegio_id;
 
-        $ingreso = Ingreso::where('colegio_id', $colegio)
+        // $ingreso = Ingreso::where('colegio_id', $colegio)
+        // ->where('mes', $mes)
+        // ->where('año', $anio)
+        // ->first();
+        $ingreso = Ingreso::join('colegios', 'ingresos.colegio_id', '=', 'colegios.id')
+        ->select('ingresos.*', 'colegios.nombre as nombre')
+        ->where('ingresos.colegio_id', $colegio)
         ->where('mes', $mes)
         ->where('año', $anio)
         ->first();

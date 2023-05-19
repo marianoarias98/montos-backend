@@ -16,18 +16,18 @@ class MontoController extends Controller
         $colegio =  $request->colegio_id;
 
         $montos = Monto::join('conceptos', 'conceptos.id', '=', 'montos.concepto_id')
-        ->select('montos.*', 'conceptos.nombre as nombre', 'conceptos.codigo as codigo')
-        ->where('montos.mes', $mes)
-        ->where('montos.año', $anio)
-        ->where('montos.colegio_id', $colegio)
-        ->orderBy('montos.concepto_id')
-        ->get();
+            ->select('montos.*', 'conceptos.nombre as nombre', 'conceptos.codigo as codigo')
+            ->where('montos.mes', $mes)
+            ->where('montos.año', $anio)
+            ->where('montos.colegio_id', $colegio)
+            ->orderBy('montos.concepto_id')
+            ->get();
 
         $sumatorias = Monto::selectRaw('SUM(personal) as suma_personal, SUM(patronal) as suma_patronal,SUM(total) as suma_total')
-        ->where('montos.mes', $mes)
-        ->where('montos.año', $anio)
-        ->where('montos.colegio_id', $colegio)
-        ->get();
+            ->where('montos.mes', $mes)
+            ->where('montos.año', $anio)
+            ->where('montos.colegio_id', $colegio)
+            ->get();
 
         return response()->json([
             'montos' => $montos,
@@ -69,7 +69,7 @@ class MontoController extends Controller
         $monto->año = $request->año;
         $monto->save();
         return response()->json(['message' => 'Monto editado con exito'], 200);
-    }   
+    }
 
     public function destroy(Request $request)
     {
@@ -77,5 +77,21 @@ class MontoController extends Controller
         $monto = Monto::findOrFail($monto_id);
         $monto->delete();
         return response()->json(['Message' => 'Monto Eliminado'], 200);
+    }
+
+    public function indexAll(Request $request)
+    {
+        $mes = $request->mes;
+        $año = $request->año;
+
+        $montos = DB::table('montos')
+            ->join('colegios', 'montos.colegio_id', '=', 'colegios.id')
+            ->select('montos.colegio_id', 'montos.mes', 'montos.año', DB::raw('SUM(montos.personal) AS sum_personal'), DB::raw('SUM(montos.patronal) AS sum_patronal'), DB::raw('SUM(montos.total) as sum_total'), 'colegios.nombre as nombre')
+            ->where('montos.mes', $mes)
+            ->where('montos.año', $año)
+            ->groupBy('montos.colegio_id', 'montos.mes', 'montos.año', 'colegios.nombre')
+            ->get();
+
+        return response()->json($montos, 200);
     }
 }
