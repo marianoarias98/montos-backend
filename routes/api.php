@@ -25,3 +25,4 @@ Route::post('/montos/listado', [MontoController::class, 'indexAll']);
 
 Route::post('/ingreso', [IngresosController::class, 'show']);
 Route::post('/ingreso/crear', [IngresosController::class, 'store']);
+Route::post('/ingreso/actualizar', [IngresosController::class, 'update']);

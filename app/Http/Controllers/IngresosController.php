@@ -37,4 +37,16 @@ class IngresosController extends Controller
         $ingreso->save();
         return response()->json(['message' => 'Ingreso registrado'], 200);
     }
+
+    public function update (Request $request) {
+        $id = $request->id;
+        $ingreso = Ingreso::findOrFail($id);
+        $ingreso->monto_aporte = $request->monto_aporte;
+        $ingreso->monto_spep = $request->monto_spep;
+        $ingreso->mes = $request->mes;
+        $ingreso->año = $request->anio;
+        $ingreso->colegio_id = $request->colegio_id;
+        $ingreso->save();
+        return response()->json(['message' => 'Ingreso actualizado'], 200);
+    }
 }
